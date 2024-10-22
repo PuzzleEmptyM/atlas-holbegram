@@ -45,7 +45,7 @@ const LoginScreen = () => {
         <Text className="text-center text-white font-bold text-lg">Sign in</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/RegisterScreen')} className="w-full py-4 rounded-lg">
-        <Text className="text-center text-teal font-bold text-lg">Create a new account</Text>
+        <Text className="text-center text-teal font-bold text-xl">Create a new account</Text>
       </TouchableOpacity>
     </View>
   );
