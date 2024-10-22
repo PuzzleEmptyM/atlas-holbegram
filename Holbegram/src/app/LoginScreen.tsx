@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 interface Props {
   navigation: any;
 }
 
-const RegisterScreen: React.FC<Props> = ({ navigation }) => {
+const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
 
-  const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, email, password)
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         navigation.replace('HomeScreen');
       })
@@ -34,13 +34,13 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         secureTextEntry
       />
       {error ? <Text>{error}</Text> : null}
-      <Button title="Create Account" onPress={handleRegister} />
+      <Button title="Sign In" onPress={handleLogin} />
       <Button
-        title="Login to existing account"
-        onPress={() => navigation.navigate('LoginScreen')}
+        title="Create a new account"
+        onPress={() => navigation.navigate('RegisterScreen')}
       />
     </View>
   );
 };
 
-export default RegisterScreen;
+export default LoginScreen;
