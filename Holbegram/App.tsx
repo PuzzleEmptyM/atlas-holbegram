@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { User } from 'firebase/auth';
-import LoginScreen from './src/app';
+import LoginScreen from './src/app/index'; // Ensure this is the correct import
 import RegisterScreen from './src/app/RegisterScreen';
 import Tabs from './src/app/(tabs)';
 import { StatusBar } from 'expo-status-bar';
@@ -25,7 +25,7 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setLoading(false); // Set loading to false after determining auth status
+      setLoading(false);
     });
 
     return unsubscribe;
@@ -41,23 +41,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <>
-            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
-          </>
-        )}
+      <Stack.Navigator initialRouteName="LoginScreen">
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>
   );
 }
-function RootStackParamList() {
-  throw new Error('Function not implemented.');
-}
-
